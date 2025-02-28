@@ -1,0 +1,189 @@
+[
+  {
+    "_id": "672d96db68280455688a454e",
+    "name": "Elegant Table Lamp",
+    "slug": "elegant_table_lamp",
+    "description": "Illuminate your living space with this elegant table lamp, featuring a timeless design that complements any decor style. Crafted with a durable metal base and a soft fabric shade, this lamp provides a warm and inviting glow. Perfect for placing on bedside tables or desks, it adds a touch of sophistication to your home.",
+    "price": 49.99,
+    "salePrice": 39.99,
+    "totalStock": 20,
+    "category": "Lamps",
+    "manufacturer": "Vitra",
+    "material": "Metal and Fabric",
+    "averageReview": 4.5,
+    "quantityReview": 120,
+    "images": [
+      "/img/Products/images/Product01/1.jpg",
+      "/img/Products/images/Product01/2.jpg",
+      "/img/Products/images/Product01/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a454f",
+    "name": "Modern Coffee Table",
+    "slug": "modern_coffee_table",
+    "description": "This modern coffee table is a perfect blend of style and functionality. With its sleek glass top and sturdy wooden legs, it adds a contemporary touch to your living room. The spacious tabletop offers plenty of room for books, magazines, or decor items, while the lower shelf provides additional storage space. Whether you're enjoying a cup of coffee or entertaining guests, this table is both practical and stylish.",
+    "price": 159.99,
+    "salePrice": 139.99,
+    "totalStock": 15,
+    "category": "Tables",
+    "manufacturer": "Vitra",
+    "material": "Glass and Wood",
+    "averageReview": 4.7,
+    "quantityReview": 85,
+    "images": [
+      "/img/Products/images/Product02/1.jpg",
+      "/img/Products/images/Product02/2.jpg",
+      "/img/Products/images/Product02/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4550",
+    "name": "Comfortable Armchair",
+    "slug": "comfortable_armchair",
+    "description": "Sink into luxury with this comfortable armchair, designed with plush cushions and a supportive backrest. The soft fabric upholstery is both durable and easy to clean, making it a perfect addition to any living room or reading nook. Whether you're relaxing with a book or watching TV, this chair offers unparalleled comfort and style.",
+    "price": 249.99,
+    "salePrice": 229.99,
+    "totalStock": 16,
+    "category": "Chairs",
+    "manufacturer": "IKEA",
+    "material": "Fabric and Wood",
+    "averageReview": 4.8,
+    "quantityReview": 60,
+    "images": [
+      "/img/Products/images/Product03/1.jpg",
+      "/img/Products/images/Product03/2.jpg",
+      "/img/Products/images/Product03/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4551",
+    "name": "Spacious Dresser",
+    "slug": "spacious_dresser",
+    "description": "Organize your wardrobe with this spacious dresser, featuring multiple drawers for ample storage. The dresser is constructed from high-quality wood and finished with a smooth veneer, giving it a polished and elegant look. The drawers glide open easily, and the top surface is perfect for displaying decorative items. Ideal for bedrooms or guest rooms, this dresser combines practicality with style.",
+    "price": 399.99,
+    "salePrice": 349.99,
+    "totalStock": 10,
+    "category": "Dressers",
+    "manufacturer": "Herman Miller",
+    "material": "Wood",
+    "averageReview": 4.4,
+    "quantityReview": 50,
+    "images": [
+      "/img/Products/images/Product04/1.jpg",
+      "/img/Products/images/Product04/2.jpg",
+      "/img/Products/images/Product04/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4552",
+    "name": "Classic Wooden Cot",
+    "slug": "classic_wooden_cot",
+    "description": "Ensure a restful night's sleep with this classic wooden cot, designed with safety and comfort in mind. The cot features a sturdy wooden frame and adjustable mattress height, making it suitable for infants and toddlers. The smooth finish and rounded edges provide a safe sleeping environment, while the timeless design fits seamlessly into any nursery decor.",
+    "price": 299.99,
+    "totalStock": 17,
+    "category": "Cots",
+    "manufacturer": "IKEA",
+    "material": "Wood",
+    "averageReview": 4.6,
+    "quantityReview": 75,
+    "images": [
+      "/img/Products/images/Product05/1.jpg",
+      "/img/Products/images/Product05/2.jpg",
+      "/img/Products/images/Product05/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4553",
+    "name": "Stylish Night Stand",
+    "slug": "stylish_night_stand",
+    "description": "Add a touch of elegance to your bedroom with this stylish night stand. Featuring a compact design with a single drawer and an open shelf, it offers convenient storage for your bedside essentials. The night stand is crafted from durable wood and finished with a rich stain that enhances its natural beauty. Whether placed next to your bed or in a living area, it provides both functionality and aesthetic appeal.",
+    "price": 129.99,
+    "salePrice": 109.99,
+    "totalStock": 9,
+    "category": "Night Stands",
+    "manufacturer": "Herman Miller",
+    "material": "Wood",
+    "averageReview": 4.3,
+    "quantityReview": 30,
+    "images": [
+      "/img/Products/images/Product06/1.jpg",
+      "/img/Products/images/Product06/2.jpg",
+      "/img/Products/images/Product06/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4554",
+    "name": "Luxury Sofa",
+    "slug": "luxury_sofa",
+    "description": "Transform your living room with this luxury sofa, offering a perfect blend of style and comfort. Upholstered in high-quality fabric, this sofa features plush cushions and a sturdy frame that ensures long-lasting durability. The contemporary design fits seamlessly into modern homes, making it an ideal choice for both family rooms and formal living areas.",
+    "price": 899.99,
+    "totalStock": 5,
+    "category": "Sofas",
+    "manufacturer": "Herman Miller",
+    "material": "Fabric and Wood",
+    "averageReview": 4.9,
+    "quantityReview": 200,
+    "images": [
+      "/img/Products/images/Product07/1.jpg",
+      "/img/Products/images/Product07/2.jpg",
+      "/img/Products/images/Product07/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4555",
+    "name": "Versatile Shelf Unit",
+    "slug": "versatile_shelf_unit",
+    "description": "Maximize your storage space with this versatile shelf unit, perfect for displaying books, decor, or organizing everyday items. The shelf is made from durable materials and features a modern design that fits into any room. With multiple compartments and adjustable shelves, it provides ample storage options while adding a stylish touch to your home.",
+    "price": 249.99,
+    "totalStock": 14,
+    "category": "Shelves",
+    "manufacturer": "Hawworth",
+    "material": "Metal and Wood",
+    "averageReview": 4.2,
+    "quantityReview": 40,
+    "images": [
+      "/img/Products/images/Product08/1.jpg",
+      "/img/Products/images/Product08/2.jpg",
+      "/img/Products/images/Product08/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4556",
+    "name": "Adjustable Stool Chair",
+    "slug": "adjustable_stool_chair",
+    "description": "This adjustable stool chair is a versatile seating option for any space. The height can be easily adjusted to suit different needs, and the cushioned seat provides comfort for extended use. The sturdy metal frame and sleek design make it a perfect addition to kitchens, bars, or workspaces. Whether used as a bar stool or a desk chair, it offers both functionality and style.",
+    "price": 89.99,
+    "salePrice": 79.99,
+    "totalStock": 10,
+    "category": "Chairs",
+    "manufacturer": "Maiden Home",
+    "material": "Metal and Fabric",
+    "averageReview": 4.1,
+    "quantityReview": 25,
+    "images": [
+      "/img/Products/images/Product09/1.jpg",
+      "/img/Products/images/Product09/2.jpg",
+      "/img/Products/images/Product09/3.jpg"
+    ]
+  },
+  {
+    "_id": "672d96db68280455688a4557",
+    "name": "Contemporary Lamp",
+    "slug": "contemporary_lamp",
+    "description": "Brighten your home with this contemporary lamp, featuring a sleek design that complements modern interiors. The lamp is crafted from high-quality materials and comes with an adjustable neck, allowing you to direct light where needed. Perfect for desks, bedside tables, or living rooms, this lamp adds a touch of elegance while providing functional lighting.",
+    "price": 69.99,
+    "salePrice": 59.99,
+    "totalStock": 16,
+    "category": "Lamps",
+    "manufacturer": "Knoll",
+    "material": "Metal",
+    "averageReview": 4.6,
+    "quantityReview": 95,
+    "images": [
+      "/img/Products/images/Product10/1.jpg",
+      "/img/Products/images/Product10/2.jpg",
+      "/img/Products/images/Product10/3.jpg"
+    ]
+  }
+]

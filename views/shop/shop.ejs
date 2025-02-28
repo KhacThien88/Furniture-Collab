@@ -1,0 +1,366 @@
+<div class="shop-page py-14 px-6">
+    <!-- Sort Section -->
+    <div class="text-right mb-6">
+        <form id="sortForm" method="GET" action="/shop">
+            <label>
+                <select name="sort" onchange="updateQueryParams(this)"
+                    class="filter-dropdown border focus:outline-none focus:ring-2 py-2">
+                    <option value="" <%=!filters?.sort ? 'selected' : '' %>>Sort By</option>
+                    <option value="price-asc" <%=filters?.sort==='price-asc' ? 'selected' : '' %>>Price: Low to High
+                    </option>
+                    <option value="price-desc" <%=filters?.sort==='price-desc' ? 'selected' : '' %>>Price: High to Low
+                    </option>
+                    <option value="name-asc" <%=filters?.sort==='name-asc' ? 'selected' : '' %>>Name: A to Z</option>
+                    <option value="name-desc" <%=filters?.sort==='name-desc' ? 'selected' : '' %>>Name: Z to A</option>
+                    <option value="createdAt-asc" <%=filters?.sort==='createdAt-asc' ? 'selected' : '' %>>New: Old to
+                        New</option>
+                    <option value="createdAt-desc" <%=filters?.sort==='createdAt-desc' ? 'selected' : '' %>>New: New to
+                        Old</option>
+                </select>
+            </label>
+        </form>
+    </div>
+
+    <div class="flex flex-col lg:flex-row">
+        <!-- Filter Section -->
+        <div class="w-full lg:w-1/4 p-4 mb-6 lg:mb-0">
+            <h2 class="text-2xl font-semibold mb-4">Filter Products</h2>
+            <form id="filterForm" method="GET" action="/shop">
+                <!-- Price Filter -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">Price</h3>
+                    <div class="flex flex-col gap-4 sm:flex-row sm:gap-6">
+                        <div class="flex flex-col w-full">
+                            <label for="minPrice" class="text-sm font-medium">Min Price</label>
+                            <input type="number" id="minPrice" name="minPrice" placeholder="Min Price"
+                                value="<%= filters?.minPrice || '' %>"
+                                class="filter-input px-4 py-2 border rounded-md w-full"
+                                onchange="updateRangeFilter('minPrice', this.value)" />
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="maxPrice" class="text-sm font-medium">Max Price</label>
+                            <input type="number" id="maxPrice" name="maxPrice" placeholder="Max Price"
+                                value="<%= filters?.maxPrice || '' %>"
+                                class="filter-input px-4 py-2 border rounded-md w-full"
+                                onchange="updateRangeFilter('maxPrice', this.value)" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold">Category</h3>
+                    <div class="flex flex-col">
+                        <% categories.forEach(category=> { %>
+                            <label>
+                                <input type="checkbox" name="category" value="<%= category %>"
+                                    <%=filters?.category?.includes(category) ? 'checked' : '' %>
+                                onchange="updateCheckboxFilter(this)" />
+                                <%= category %>
+                            </label>
+                            <% }); %>
+                    </div>
+                </div>
+
+                <!-- Manufacturer Filter -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold">Manufacturer</h3>
+                    <div class="flex flex-col">
+                        <% manufacturers.forEach(manufacturer=> { %>
+                            <label>
+                                <input type="checkbox" name="manufacturer" value="<%= manufacturer %>"
+                                    <%=filters?.manufacturer?.includes(manufacturer) ? 'checked' : '' %>
+                                onchange="updateCheckboxFilter(this)" />
+                                <%= manufacturer %>
+                            </label>
+                            <% }); %>
+                    </div>
+                </div>
+
+                <!-- Material Filter -->
+                <div>
+                    <h3 class="text-lg font-semibold">Material</h3>
+                    <div class="flex flex-col">
+                        <% ['Wood', 'Plastic' , 'Metal' , 'Fabric' , 'Glass' , 'Ceramic' ].forEach(material=> { %>
+                            <label>
+                                <input type="checkbox" name="material" value="<%= material %>"
+                                    <%=filters?.material?.includes(material) ? 'checked' : '' %>
+                                onchange="updateCheckboxFilter(this)" />
+                                <%= material %>
+                            </label>
+                            <% }); %>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Products List -->
+        <div class="w-full lg:w-3/4 p-4" id="productListContainer">
+            <h1 class="text-3xl font-bold mb-8">Our Products</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productList">
+                <% products.forEach(product=> { %>
+                    <div
+                        class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
+                        <div>
+                            <a href="/shop/<%= product._id %>">
+                                <!-- Fixed Image Size -->
+                                <img src="<%= product.images[0] %>" alt="<%= product.name %>"
+                                    class="w-full h-64 object-cover object-center" />
+                            </a>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold">
+                                <%= product.name %>
+                            </h3>
+                            <div class="mt-2">
+                                <% if (product.salePrice) { %>
+                                    <div class="flex gap-4">
+                                        <p class="text-lime-500 line-through">$<%= product.price %>
+                                        </p>
+                                        <p class="text-lime-500 font-bold">$<%= product.salePrice %>
+                                        </p>
+                                    </div>
+                                    <% } else { %>
+                                        <p class="text-lime-500 font-bold">$<%= product.price %>
+                                        </p>
+                                        <% } %>
+                            </div>
+
+                            <!-- View Detail Button -->
+                            <div class="mt-4">
+                                <a href="/shop/<%= product._id %>-<%= product.name.replace(/\s+/g, '-').toLowerCase() %>"
+                                    class="px-6 py-2 bg-lime-500 text-white rounded-md hover:bg-lime-600 text-center inline-block">
+                                    View Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+
+
+            <!-- Pagination Section -->
+            <div id="pagination" class="pagination mt-8 flex justify-center items-center gap-2">
+                <!-- Previous Button -->
+                <a onclick="fetchProducts()"
+                    class="<%= currentPage === 1 ? 'px-4 py-2 text-gray-400 cursor-not-allowed' : 'px-4 py-2 border rounded hover:bg-gray-200' %>">
+                    Previous
+                </a>
+
+                <!-- Page Numbers -->
+                <% for (let i=1; i <=totalPages; i++) { %>
+                    <a onclick="fetchProducts()"
+                        class="<%= currentPage === i ? 'bg-lime-500 text-white px-4 py-2 rounded' : 'px-3 py-1 border rounded hover:bg-gray-200' %>">
+                        <%= i %>
+                    </a>
+                    <% } %>
+
+                        <!-- Next Button -->
+                        <a onclick="fetchProducts()"
+                            class="<%= currentPage === totalPages ? 'px-4 py-2 text-gray-400 cursor-not-allowed' : 'px-4 py-2 border rounded hover:bg-gray-200' %>">
+                            Next
+                        </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const productListContainer = document.getElementById('productList');
+    const paginationContainer = document.getElementById('pagination');
+
+    document.getElementById('sortForm').addEventListener('change', (e) => {
+        const filters = { ...Object.fromEntries(new FormData(document.getElementById('filterForm')).entries()), sort: e.target.value };
+        updateURL(filters);
+        fetchProducts(filters);
+    });
+
+    function hasFilters(filters) {
+        return Object.values(filters).some(value => {
+            if (Array.isArray(value)) {
+                return value.length > 0;
+            }
+            return value !== undefined && value !== '';
+        });
+    }
+
+    function updateCheckboxFilter(checkbox) {
+        const filters = Object.fromEntries(new FormData(document.getElementById('filterForm')).entries());
+        const filterName = checkbox.name;
+        const checkedValues = Array.from(
+            document.querySelectorAll(`input[name="${filterName}"]:checked`)
+        ).map(input => input.value);
+
+        // Only update the filter in the object if there are selected values
+        if (checkedValues.length > 0) {
+            filters[filterName] = checkedValues;
+        } else {
+            delete filters[filterName]; // Remove the filter if no checkboxes are selected
+        }
+
+        // Update the URL with the new filter parameters
+        updateURL(filters);
+        fetchProducts(filters);
+    }
+
+    function updateRangeFilter(field, value) {
+        const filters = Object.fromEntries(new FormData(document.getElementById('filterForm')).entries());
+        filters[field] = value; // Add or update the field
+
+        // Cập nhật lại URL với các tham số filter mới
+        updateURL(filters);
+        fetchProducts(filters);
+    }
+    // Fetch API to update products and pagination
+    async function fetchProducts(filters = {}) {
+        if (!hasFilters(filters)) {
+            filters = {};  // Không có bộ lọc, sẽ sử dụng mặc định
+        }
+        const url = new URL('/api/products', window.location.origin);
+        Object.keys(filters).forEach(key => url.searchParams.append(key, filters[key]));
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        renderProducts(data.products);
+        renderPagination(data.currentPage, data.totalPages, filters);
+    }
+
+    // Render products
+    function renderProducts(products) {
+        productListContainer.innerHTML = products
+            .map(
+                (product) => `
+        <div class="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
+            <div>
+                <a href="/shop/${product._id}">
+                    <img src="${product.images[0]}" alt="${product.name}" class="w-full h-64 object-cover object-center" />
+                </a>
+            </div>
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">${product.name}</h3>
+                <div class="mt-2">
+                    ${product.salePrice
+                        ? `<div class="flex gap-4">
+                                <p class="text-lime-500 line-through">$${product.price}</p>
+                                <p class="text-lime-500 font-bold">$${product.salePrice}</p>
+                               </div>`
+                        : `<p class="text-lime-500 font-bold">$${product.price}</p>`
+                    }
+                </div>
+                <div class="mt-4">
+                    <a href="/shop/${product._id}-${product.name.replace(/\s+/g, '-').toLowerCase()}"
+                        class="px-6 py-2 bg-lime-500 text-white rounded-md hover:bg-lime-600 text-center inline-block">
+                        View Detail
+                    </a>
+                </div>
+            </div>
+        </div>`
+            )
+            .join('');
+    }
+
+
+    // Render pagination
+    function renderPagination(currentPage, totalPages, filters) {
+        paginationContainer.innerHTML = '';
+
+        // Add Previous Button
+        const prevButton = document.createElement('a');
+        prevButton.href = '#';
+        prevButton.textContent = 'Previous';
+        prevButton.className = currentPage === 1
+            ? 'px-4 py-2 text-gray-400 cursor-not-allowed'
+            : 'px-4 py-2 border rounded hover:bg-gray-200';
+
+        prevButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPage > 1) {
+                const newFilters = { ...filters, page: currentPage - 1 };
+                updateURL(newFilters);
+                fetchProducts(newFilters);
+            }
+        });
+
+        paginationContainer.appendChild(prevButton);
+
+        // Add page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.textContent = i;
+            pageLink.className = currentPage === i
+                ? 'bg-lime-500 text-white px-4 py-2 rounded'
+                : 'px-3 py-1 border rounded hover:bg-gray-200';
+
+            pageLink.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default link behavior
+                const newFilters = { ...filters, page: i };
+                updateURL(newFilters);
+                fetchProducts(newFilters);
+            });
+
+            paginationContainer.appendChild(pageLink);
+        }
+
+        // Add Next Button
+        const nextButton = document.createElement('a');
+        nextButton.href = '#';
+        nextButton.textContent = 'Next';
+        nextButton.className = currentPage === totalPages
+            ? 'px-4 py-2 text-gray-400 cursor-not-allowed'
+            : 'px-4 py-2 border rounded hover:bg-gray-200';
+
+        nextButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPage < totalPages) {
+                const newFilters = { ...filters, page: currentPage + 1 };
+                updateURL(newFilters);
+                fetchProducts(newFilters);
+            }
+        });
+
+        paginationContainer.appendChild(nextButton);
+    }
+
+
+
+
+    // Hàm để cập nhật URL với các tham số filter
+    function updateURL(filters) {
+
+        // Create a new URL based on the current window location
+        const url = new URL(window.location.href);
+
+        // Remove old query parameters
+        url.searchParams.delete('sort');
+        url.searchParams.delete('minPrice');
+        url.searchParams.delete('maxPrice');
+        url.searchParams.delete('category');
+        url.searchParams.delete('manufacturer');
+        url.searchParams.delete('material');
+        url.searchParams.delete('page');
+
+        // Add the new filter parameters to the URL
+        Object.keys(filters).forEach(key => {
+            const filterValue = filters[key];
+
+            // Only add non-empty filters to the URL
+            if (filterValue !== undefined && filterValue !== null && (filterValue !== '' || (Array.isArray(filterValue) && filterValue.length > 0))) {
+                if (Array.isArray(filterValue)) {
+                    // Handle array filters
+                    filterValue.forEach(value => {
+                        url.searchParams.append(key, value);
+                    });
+                } else {
+                    url.searchParams.set(key, String(filterValue));
+                }
+            }
+        });
+
+        // Update the URL in the browser without reloading the page
+        history.pushState(null, '', url.toString());
+    }
+</script>

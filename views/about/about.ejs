@@ -1,0 +1,76 @@
+<div class="py-14 px-10">
+    <!-- about -->
+    <h1 class="text-4xl font-extrabold mb-6 text-gray-800 text-center">About Us</h1>
+    <p class=" text-gray-700 text-center mb-12 leading-relaxed mx-auto">
+        Welcome to our furniture shop, where quality meets elegance. We are
+        dedicated to providing high-quality, beautiful furniture to transform
+        your space into a home.
+    </p>
+
+    <!-- Core Values Section -->
+    <div class="flex flex-wrap justify-center  mb-16 mx-auto">
+        <% coreValues.forEach((value)=> { %>
+            <div
+                class="text-center m-4 p-6 bg-white rounded-lg shadow-md transform transition duration-300 hover:scale-105">
+                <h2 class="font-bold text-xl text-gray-800">
+                    <%= value.title %>
+                </h2>
+                <p class="text-gray-600 mt-2">
+                    <%= value.description %>
+                </p>
+            </div>
+            <% }) %>
+    </div>
+
+    <!-- Mission Section -->
+    <div class=" mb-16 bg-white rounded-lg shadow-lg p-8 mx-auto">
+        <h2 class="text-3xl font-bold mb-4 text-center text-gray-800">
+            Our Mission
+        </h2>
+        <p class="text-gray-700 text-center">
+            <%= mission %>
+        </p>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class=" mb-16 mx-auto">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+            Customer Testimonials
+        </h2>
+        <div class="flex flex-col md:flex-row justify-center items-center">
+            <% testimonials.forEach((testimonial)=> { %>
+                <div
+                    class="bg-white shadow-md p-6 m-2 rounded-lg max-w-sm transform transition duration-300 hover:scale-105">
+                    <p class="italic text-gray-600">"<%= testimonial.quote %>"</p>
+                    <p class="font-semibold text-gray-800 mt-2">- <%= testimonial.author %>
+                    </p>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class=" mb-16 mx-auto">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+            Meet Our Team
+        </h2>
+        <p class="text-gray-700 text-center mb-12">
+            Our team is a group of dedicated professionals passionate about
+            design, quality, and customer satisfaction.
+        </p>
+        <div class="flex flex-wrap justify-center">
+            <% teamMembers.forEach((member)=> { %>
+                <div class="text-center m-4">
+                    <img src="<%= member.image %>" alt="<%= member.name %>"
+                        class="rounded-full w-32 h-32 mx-auto border-4 border-gray-300 shadow-lg" />
+                    <h3 class="font-bold text-lg mt-4">
+                        <%= member.name %>
+                    </h3>
+                    <p class="text-gray-600">
+                        <%= member.role %>
+                    </p>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+</div>

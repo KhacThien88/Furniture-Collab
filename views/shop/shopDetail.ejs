@@ -1,0 +1,347 @@
+<div class="shop-detail py-8">
+  <div class="container mx-auto">
+    <div class="shadow-lg p-8 bg-white rounded-lg flex flex-col md:flex-row gap-10">
+      <!-- Hình ảnh sản phẩm -->
+      <div class="relative flex flex-col items-center md:items-start w-full md:w-1/2">
+        <!-- Hình ảnh chính -->
+        <div class="mb-4 w-full">
+          <img id="mainImage" src="<%= product.images[0] %>" alt="<%= product.name %>"
+            class="w-full h-auto object-cover rounded-lg cursor-pointer"
+            data-images="<%= JSON.stringify(product.images) %>" />
+        </div>
+
+        <!-- Thumbnails of all images -->
+        <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-4 items-center mx-auto">
+          <% product.images.forEach((image, index)=> { %>
+            <img src="<%= image %>" alt="<%= product.name %>"
+              class="w-24 h-24 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-lime-500"
+              data-index="<%= index %>" onclick="changeMainImage(this)" />
+            <% }) %>
+        </div>
+      </div>
+
+      <!-- Thông tin chi tiết sản phẩm -->
+      <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <h1 class="text-3xl font-bold mb-4">
+          <%= product.name %>
+        </h1>
+        <p class="text-xl text-gray-600 mb-4 leading-relaxed">
+          <%= product.description %>
+        </p>
+        <div class="mb-2">
+          <% if (product.salePrice) { %>
+            <div class="flex flex-col">
+              <p class="text-2xl text-lime-500 font-bold">
+                $<%= product.salePrice %>
+              </p>
+              <p class="text-xl text-lime-500 line-through">
+                $<%= product.price %>
+              </p>
+            </div>
+            <% } else { %>
+              <p class="text-2xl text-lime-500 font-bold">$<%= product.price %>
+              </p>
+              <% } %>
+        </div>
+
+        <!-- Category -->
+        <div class="flex items-center mb-4">
+          <span class="text-xl font-semibold text-gray-800">Category:</span>
+          <span class="ml-2 text-xl text-gray-600 bg-gray-100 px-3 py-1 rounded-md">
+            <%= product.category %>
+          </span>
+        </div>
+
+        <!-- Material -->
+        <div class="flex items-center mb-6">
+          <span class="text-xl font-semibold text-gray-800">Material:</span>
+          <span class="ml-2 text-xl text-gray-600 bg-gray-100 px-3 py-1 rounded-md">
+            <%= product.material %>
+          </span>
+        </div>
+
+        <!-- quantity -->
+        <div class="flex items-center gap-4 mb-6">
+          <button id="decreaseQty" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400">
+            -
+          </button>
+          <span id="productQuantity" class="text-2xl font-semibold">1</span>
+          <button id="increaseQty" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400">
+            +
+          </button>
+        </div>
+        <!-- Nút hành động -->
+        <div class="flex flex-wrap items-center gap-4">
+          <% if (user) { %>
+            <button class="bg-lime-500 text-white px-6 py-2 rounded-lg hover:bg-lime-600 transition duration-300"
+              onclick="addToCart('<%= product._id %>')">
+              Add to Cart
+            </button>
+            <% } else { %>
+              <button class="bg-lime-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
+                onclick="addToCart('<%= product._id %>')">
+                Add to Cart
+              </button>
+              <% } %>
+                <button class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300">
+                  Wishlist
+                </button>
+        </div>
+      </div>
+    </div>
+    <!--Reviews Product -->
+    <div class="mt-8">
+      <h2 class="text-xl font-bold mb-4">Customer Reviews</h2>
+      <div class="reviews-section mt-8">
+
+
+        <% if (reviews && reviews.length> 0) { %>
+          <% reviews.forEach((review)=> { %>
+            <div class="review-item mb-4 p-4 border border-gray-200 rounded">
+              <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center">
+                  <!-- Avatar -->
+                  <img src="<%= review.userId?.avatarUrl || '/img/Users/default.jpg' %>"
+                    alt="<%= review.userId.username %>'s avatar" class="w-8 h-8 rounded-full mr-2" />
+                  <span class="font-semibold">
+                    <%= review.userId.username %>
+                  </span>
+                </div>
+                <span class="text-gray-500 text-sm">
+                  <%= new Date(review.createdAt).toLocaleDateString() %>
+                </span>
+              </div>
+              <div class="review-rating text-yellow-500 mb-2">
+                <% for (let i=1; i <=5; i++) { %>
+                  <% if (i <=review.rating) { %>★<% } else { %>☆<% } %>
+                        <% } %>
+              </div>
+              <p class="review-comment text-gray-700">
+                <%= review.comment %>
+              </p>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <p class="text-gray-500">No reviews yet. Be the first to review this product!</p>
+                <% } %>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination mt-4 flex justify-center items-center space-x-2">
+        <% if (currentPage > 1) { %>
+          <button class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300" onclick="fetchReviews('<%= currentPage - 1 %>')">
+            Previous
+          </button>
+          <% } %>
+
+            <% for (let i=1; i <=totalPages; i++) { %>
+              <button class="px-3 py-1 rounded <%= currentPage === i ? 'bg-blue-500 text-white' : 'bg-gray-200' %>"
+                onclick="fetchReviews('<%= i %>')">
+                <%= i %>
+              </button>
+              <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                  <button class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300" onclick="fetchReviews('<%= currentPage + 1 %>')">
+                    Next
+                  </button>
+                  <% } %>
+      </div>
+    </div>
+    <!-- Related Products -->
+    <div class="mt-16">
+      <h2 class="text-3xl font-bold mb-8">Related Products</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <% if (products && products.length> 0) { %> <% products.filter(p=>
+            (p.category === product.category || p.manufacturer ===
+            product.manufacturer) && String(p._id) !==
+            String(product._id)).forEach(relatedProduct => { %>
+            <div
+              class="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
+              <a href="/shop/<%= relatedProduct._id %>">
+                <div class="w-full">
+                  <img src="<%= relatedProduct.images[0] %>" alt="<%= relatedProduct.name %>"
+                    class="w-full h-full object-cover" />
+                </div>
+              </a>
+              <div class="p-4">
+                <h3 class="text-xl font-semibold">
+                  <%= relatedProduct.name %>
+                </h3>
+                <div class="mt-2">
+                  <% if (relatedProduct.salePrice) { %>
+                    <div class="flex gap-4">
+                      <p class="text-lime-500 line-through">
+                        $<%= relatedProduct.price %>
+                      </p>
+                      <p class="text-lime-500 font-bold">
+                        $<%= relatedProduct.salePrice %>
+                      </p>
+                    </div>
+                    <% } else { %>
+                      <p class="text-lime-500 font-bold">
+                        $<%= relatedProduct.price %>
+                      </p>
+                      <% } %>
+                </div>
+                <a href="/shop/<%= relatedProduct._id %>">
+                  <button class="bg-lime-500 text-white px-4 py-2 mt-4 rounded hover:bg-lime-600">
+                    View Details
+                  </button>
+                </a>
+              </div>
+            </div>
+            <% }); %>
+              <% } else { %>
+                <p>No related products found.</p>
+                <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function changeMainImage(selectedThumbnail) {
+    const mainImage = document.getElementById("mainImage");
+    const images = JSON.parse(mainImage.getAttribute("data-images"));
+    const index = selectedThumbnail.getAttribute("data-index");
+    mainImage.src = images[index];
+
+    // Xóa lớp 'selected-thumbnail' khỏi tất cả thumbnail
+    const thumbnails = document.querySelectorAll(".relative img");
+    thumbnails.forEach((thumbnail) =>
+      thumbnail.classList.remove("selected-thumbnail")
+    );
+
+    // Thêm lớp 'selected-thumbnail' vào ảnh được chọn
+    selectedThumbnail.classList.add("selected-thumbnail");
+  }
+
+  // Lấy giá trị totalStock từ server
+  const totalStock = "<%= product.totalStock %>";
+  let quantity = 1;
+
+  // Cập nhật số lượng sản phẩm
+  document.getElementById("increaseQty").addEventListener("click", () => {
+    if (quantity < totalStock) {
+      quantity++;
+      updateQuantityDisplay();
+    } else {
+      //alert(`You can only purchase up to ${totalStock} items.`);
+      document.getElementById("increaseQty").disabled = true;
+    }
+  });
+
+  document.getElementById("decreaseQty").addEventListener("click", () => {
+    if (quantity > 1) {
+      quantity--;
+      updateQuantityDisplay();
+    }
+  });
+
+  function updateQuantityDisplay() {
+    document.getElementById("productQuantity").innerText = quantity;
+  }
+
+  async function addToCart(productId) {
+    try {
+      const response = await fetch("/api/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: productId,
+          quantity: quantity,
+        }),
+      });
+      console.log(response);
+      const result = await response.json();
+      if (response.ok) {
+        alert("Product added to cart successfully!");
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert("Something went wrong. Please try again later");
+    }
+  }
+
+  async function fetchReviews(page) {
+    try {
+
+      const productId = '<%= product._id %>';
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('page', page);
+      window.history.pushState({}, '', currentUrl);
+
+      // Gọi API
+      const response = await fetch(`/api/reviews/product/${productId}?page=${page}`);
+      const { reviews, totalPages, currentPage } = await response.json();
+
+      // Cập nhật giao diện
+      updateReviewsUI(reviews);
+      renderPagination(currentPage, totalPages);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  }
+
+  function updateReviewsUI(reviews) {
+    const reviewsSection = document.querySelector(".reviews-section");
+
+    if (reviews && reviews.length > 0) {
+      reviewsSection.innerHTML = reviews
+        .map(
+          (review) => `
+        <div class="review-item mb-4 p-4 border border-gray-200 rounded">
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center">
+              <img src="${review.userId?.avatarUrl || '/img/Users/default.jpg'}"
+                alt="${review.userId?.username || 'Anonymous'}'s avatar"
+                class="w-8 h-8 rounded-full mr-2" />
+              <span class="font-semibold">${review.userId?.username || 'Anonymous'}</span>
+            </div>
+            <span class="text-gray-500 text-sm">${new Date(review.createdAt).toLocaleDateString()}</span>
+          </div>
+          <div class="review-rating text-yellow-500 mb-2">
+            ${Array.from({ length: 5 })
+              .map((_, i) => (i < review.rating ? "★" : "☆"))
+              .join("")}
+          </div>
+          <p class="review-comment text-gray-700">${review.comment}</p>
+        </div>
+      `
+        )
+        .join("");
+    } else {
+      reviewsSection.innerHTML = `<p class="text-gray-500">No reviews yet. Be the first to review this product!</p>`;
+    }
+  }
+
+
+  function renderPagination(currentPage, totalPages) {
+      const paginationSection = document.querySelector(".pagination");
+
+      paginationSection.innerHTML = `
+    ${currentPage > 1
+          ? `<button class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300" onclick="fetchReviews(${currentPage - 1})">Previous</button>`
+          : ""
+        }
+    ${Array.from({ length: totalPages })
+          .map(
+            (_, i) => `
+          <button class="px-3 py-1 rounded ${currentPage === i + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+              }" onclick="fetchReviews(${i + 1})">${i + 1}</button>`
+          )
+          .join("")}
+    ${currentPage < totalPages
+          ? `<button class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300" onclick="fetchReviews(${currentPage + 1})">Next</button>`
+          : ""
+        }
+  `;
+    }
+</script>

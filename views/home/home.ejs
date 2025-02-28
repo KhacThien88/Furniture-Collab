@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        .swiper-slide img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Slider -->
+    <div class="w-full">
+        <div class="w-full swiper mySwiper">
+            <div class="w-full swiper-wrapper">
+                <% if (heroSlider && heroSlider.length> 0) { %>
+                    <% heroSlider.forEach((slider)=> { %>
+                        <div class="w-full swiper-slide">
+                            <div class="relative">
+                                <img src="<%= slider.image %>" alt="<%= slider.alt %>" />
+                                <div class="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
+                                    <h1
+                                        class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 drop-shadow-md">
+                                        <%= slider.title %>
+                                    </h1>
+                                    <p
+                                        class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-100 py-2 md:py-3 px-3 md:px-5">
+                                        <%= slider.subtitle %>
+                                    </p>
+                                    <a href="#">
+                                        <button
+                                            class="md:px-5 md:py-4 sm:px-4 sm:py-3 px-3 py-2 bg-lime-500 hover:bg-lime-600 rounded text-xs sm:text-base font-bold">
+                                            <%= slider.buttonText %>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } %>
+            </div>
+
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="w-full py-14 px-10">
+        <h1 class="font-bold text-3xl">Find Your Style: Furniture Categories</h1>
+        <div class="w-full flex flex-wrap justify-center items-center gap-3 py-5 px-4">
+            <% if (categories && categories.length> 0) { %>
+                <% categories.forEach((category)=> { %>
+                    <div
+                        class="flex flex-col h-32 w-32 justify-center items-center p-3 rounded-full bg-lime-300 hover:bg-lime-400 cursor-pointer transition-all ease-linear duration-150">
+                        <img src="<%= category.image %>" alt="<%= category.name %>" class="w-10 h-10" />
+                        <h3 class="text-sm text-center font-bold py-2 w-full text-nowrap">
+                            <%= category.name %>
+                        </h3>
+                    </div>
+                    <% }) %>
+                        <% } %>
+        </div>
+    </div>
+
+    <!-- Discover Our Featured Products -->
+    <div class="w-full py-14 px-10">
+        <h1 class="text-3xl font-bold mb-8 text-center">Discover Our Featured Products</h1>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productList">
+            <% products.forEach((product)=> { %>
+                <div
+                    class="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
+                    <a href="/shop/<%= product._id %>">
+                        <div class="w-full">
+                            <img src="<%= product.images[0] %>" alt="<%= product.name %>"
+                                class="w-full h-full object-cover" />
+                        </div>
+                    </a>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">
+                            <%= product.name %>
+                        </h3>
+                        <div class="mt-2">
+                            <% if (product.salePrice) { %>
+                                <div class="flex gap-4">
+                                    <p class="text-lime-500 line-through">$<%= product.price %>
+                                    </p>
+                                    <p class="text-lime-500 font-bold">$<%= product.salePrice %>
+                                    </p>
+                                </div>
+                                <% } else { %>
+                                    <p class="text-lime-500 font-bold">$<%= product.price %>
+                                    </p>
+                                    <% } %>
+                        </div>
+                        <a href="/shop/<%= product._id %>">
+                            <button class="bg-lime-500 text-white px-4 py-2 mt-4 rounded hover:bg-lime-600">View
+                                Details</button>
+                        </a>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <!-- Banner Section -->
+    <div class="w-full h-full flex md:flex-row flex-col justify-center items-center gap-3 py-14 px-10 w-full">
+        <div class="flex-1 relative">
+            <div>
+                <img src="/img/Hero_banner/01.jpg" alt="banner" class="w-full h-full object-cover" />
+            </div>
+            <div class="absolute bottom-4 p-3">
+                <h1 class="text-[clamp(1em,2.5vw,3em)] font-semibold">
+                    Exclusive Deal:
+                </h1>
+                <h1 class="text-[clamp(1em,3vw,4em)] font-bold">
+                    Save Big on Stylish Chairs!
+                </h1>
+            </div>
+        </div>
+        <div class="flex-1 relative">
+            <div>
+                <img src="/img/Hero_banner/04.jpg" alt="banner" class="w-full h-full object-cover" />
+            </div>
+            <div class="absolute top-4 p-3">
+                <h1 class="text-[clamp(1em,2.5vw,3em)] font-semibold">
+                    Limited Time Offer:
+                </h1>
+                <h1 class="text-[clamp(1em,3vw,4em)] font-bold">
+                    Get Cozy with Discounted Sofas!
+                </h1>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Discover our Best Seller -->
+    <div class="w-full py-14 px-10">
+        <h1 class="text-3xl font-bold mb-8 text-center">Discover our Best Seller</h1>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productList">
+            <% products.forEach((product)=> { %>
+                <div
+                    class="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
+                    <a href="/shop/<%= product._id %>">
+                        <div class="w-full">
+                            <img src="<%= product.images[0] %>" alt="<%= product.name %>"
+                                class="w-full h-full object-cover" />
+                        </div>
+                    </a>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">
+                            <%= product.name %>
+                        </h3>
+                        <div class="mt-2">
+                            <% if (product.salePrice) { %>
+                                <div class="flex gap-4">
+                                    <p class="text-lime-500 line-through">$<%= product.price %>
+                                    </p>
+                                    <p class="text-lime-500 font-bold">$<%= product.salePrice %>
+                                    </p>
+                                </div>
+                                <% } else { %>
+                                    <p class="text-lime-500 font-bold">$<%= product.price %>
+                                    </p>
+                                    <% } %>
+                        </div>
+                        <a href="/shop/<%= product._id %>">
+                            <button class="bg-lime-500 text-white px-4 py-2 mt-4 rounded hover:bg-lime-600">View
+                                Details</button>
+                        </a>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+</body>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.mySwiper', {
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+</script>
+
+</html>

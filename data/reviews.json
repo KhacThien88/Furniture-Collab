@@ -1,0 +1,142 @@
+[
+  {
+    "_id": "672d968768280455688a451a",
+    "rating": 5,
+    "comment": "Absolutely love this lamp! It fits perfectly in my bedroom and gives off a nice, warm light.",
+    "productId": "672d96db68280455688a454e",
+    "userId": "672d969368280455688a452f"
+  },
+  {
+    "_id": "672d968768280455688a451b",
+    "rating": 4,
+    "comment": "Great lamp, but the shade is a bit darker than I expected.",
+    "productId": "672d96db68280455688a454e",
+    "userId": "672d969368280455688a4530"
+  },
+  {
+    "_id": "672d968768280455688a451c",
+    "rating": 5,
+    "comment": "This coffee table looks great in my living room and was easy to assemble.",
+    "productId": "672d96db68280455688a454f",
+    "userId": "672d969368280455688a4531"
+  },
+  {
+    "_id": "672d968768280455688a451d",
+    "rating": 3,
+    "comment": "Nice design, but the glass top is a bit thinner than I expected.",
+    "productId": "672d96db68280455688a454f",
+    "userId": "672d969368280455688a4532"
+  },
+  {
+    "_id": "672d968768280455688a451e",
+    "rating": 5,
+    "comment": "This chair is so comfy! It’s now my favorite spot to sit and relax.",
+    "productId": "672d96db68280455688a4550",
+    "userId": "672d969368280455688a4533"
+  },
+  {
+    "_id": "672d968768280455688a451f",
+    "rating": 4,
+    "comment": "Great chair, but the color is slightly different from the picture.",
+    "productId": "672d96db68280455688a4550",
+    "userId": "672d969368280455688a4534"
+  },
+  {
+    "_id": "672d968768280455688a4520",
+    "rating": 5,
+    "comment": "This dresser is just what I needed! It has plenty of space and looks fantastic.",
+    "productId": "672d96db68280455688a4551",
+    "userId": "672d969368280455688a4535"
+  },
+  {
+    "_id": "672d968768280455688a4521",
+    "rating": 4,
+    "comment": "Very nice dresser, but the assembly took longer than expected.",
+    "productId": "672d96db68280455688a4551",
+    "userId": "672d969368280455688a4536"
+  },
+  {
+    "_id": "672d968768280455688a4522",
+    "rating": 5,
+    "comment": "Perfect cot for my baby. It’s sturdy and looks beautiful in the nursery.",
+    "productId": "672d96db68280455688a4552",
+    "userId": "672d969368280455688a4537"
+  },
+  {
+    "_id": "672d968768280455688a4523",
+    "rating": 4,
+    "comment": "Good cot, but I wish it came with a mattress.",
+    "productId": "672d96db68280455688a4552",
+    "userId": "672d969368280455688a4538"
+  },
+  {
+    "_id": "672d968768280455688a4524",
+    "rating": 5,
+    "comment": "This night stand is exactly what I was looking for. It’s sturdy and looks great.",
+    "productId": "672d96db68280455688a4553",
+    "userId": "672d969368280455688a4539"
+  },
+  {
+    "_id": "672d968768280455688a4525",
+    "rating": 3,
+    "comment": "Nice design, but the drawer doesn’t slide as smoothly as I’d like.",
+    "productId": "672d96db68280455688a4553",
+    "userId": "672d969368280455688a453a"
+  },
+  {
+    "_id": "672d968768280455688a4526",
+    "rating": 5,
+    "comment": "This sofa is amazing! It’s comfortable and looks stunning in my living room.",
+    "productId": "672d96db68280455688a4554",
+    "userId": "672d969368280455688a453b"
+  },
+  {
+    "_id": "672d968768280455688a4527",
+    "rating": 4,
+    "comment": "Great sofa, but the color is a bit lighter than expected.",
+    "productId": "672d96db68280455688a4554",
+    "userId": "672d969368280455688a453c"
+  },
+  {
+    "_id": "672d968768280455688a4528",
+    "rating": 5,
+    "comment": "This shelf is perfect for my living room. It holds all my books and looks great.",
+    "productId": "672d96db68280455688a4555",
+    "userId": "672d969368280455688a453d"
+  },
+  {
+    "_id": "672d968768280455688a4529",
+    "rating": 4,
+    "comment": "Good shelf, but the assembly instructions could be clearer.",
+    "productId": "672d96db68280455688a4555",
+    "userId": "672d969368280455688a453e"
+  },
+  {
+    "_id": "672d968768280455688a452a",
+    "rating": 5,
+    "comment": "This stool is very comfortable and adjustable, perfect for my kitchen island.",
+    "productId": "672d96db68280455688a4556",
+    "userId": "672d969368280455688a453f"
+  },
+  {
+    "_id": "672d968768280455688a452b",
+    "rating": 4,
+    "comment": "Good stool, but the seat could be a bit larger.",
+    "productId": "672d96db68280455688a4556",
+    "userId": "672d969368280455688a4540"
+  },
+  {
+    "_id": "672d968768280455688a452c",
+    "rating": 5,
+    "comment": "This lamp is exactly what I needed. It looks great and works perfectly.",
+    "productId": "672d96db68280455688a4557",
+    "userId": "672e45848d69a1fcf7f2203b"
+  },
+  {
+    "_id": "672d968768280455688a452d",
+    "rating": 4,
+    "comment": "Nice lamp, but the switch feels a bit flimsy.",
+    "productId": "672d96db68280455688a4557",
+    "userId": "672e45c78d69a1fcf7f2203c"
+  }
+]

@@ -1,0 +1,189 @@
+<div class="my-12 px-10">
+  <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Checkout</h1>
+
+  <form action="/place-order" method="POST">
+    <!-- Flexbox Container to Split Address and Order Summary -->
+    <div
+      class="flex flex-col md:flex-row space-y-6 md:space-y-0 gap-12 justify-center"
+    >
+      <!-- Left Section: Address Information -->
+      <div class="w-full md:w-2/3 shadow-lg p-6 border rounded-lg space-y-6">
+        <h2 class="text-xl font-semibold text-gray-700">Address Information</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="address[firstName]"
+            value="<%= user.firstName %>"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md"
+            placeholder="First Name"
+          />
+          <input
+            type="text"
+            name="address[lastName]"
+            value="<%= user.lastName %>"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md"
+            placeholder="Last Name"
+          />
+        </div>
+
+        <input
+          type="text"
+          name="address[address]"
+          value="<%= user.address %>"
+          required
+          class="w-full p-3 border border-gray-300 rounded-md"
+          placeholder="Address"
+        />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="address[city]"
+            value="<%= user.city %>"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md"
+            placeholder="City"
+          />
+          <input
+            type="text"
+            name="address[province]"
+            value="<%= user.province %>"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md"
+            placeholder="Province"
+          />
+        </div>
+
+        <input
+          type="text"
+          name="address[zipCode]"
+          value="<%= user.zipCode %>"
+          required
+          class="w-full p-3 border border-gray-300 rounded-md"
+          placeholder="Zip Code"
+        />
+        <input
+          type="text"
+          name="address[phoneNumber]"
+          value="<%= user.phoneNumber %>"
+          required
+          class="w-full p-3 border border-gray-300 rounded-md"
+          placeholder="Phone Number"
+        />
+      </div>
+
+      <!-- Right Section: Order Summary, Payment Method, and Submit -->
+      <div
+        class="w-full md:w-1/3 shadow-lg p-6 border rounded-lg space-y-6 mt-6 md:mt-0 flex-col justify-center"
+      >
+        <!-- Order Summary -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Order Summary
+          </h2>
+
+          <!-- Loop qua danh sách sản phẩm -->
+          <ul class="space-y-4">
+            <% items.forEach(item=> { %>
+            <li class="flex justify-between border-b pb-2">
+              <div>
+                <p class="text-lg font-semibold text-gray-800">
+                  <%= item.name %>
+                </p>
+                <p class="text-sm text-gray-500">
+                  Quantity: <%= item.quantity %>
+                </p>
+              </div>
+              <p class="text-lg font-semibold text-gray-700">
+                $<%= (item.price * item.quantity).toFixed(2) %>
+              </p>
+            </li>
+            <% }); %>
+          </ul>
+
+          <!-- Display Total Quantity and Total Amount -->
+          <h3 class="mt-4 text-lg font-bold text-gray-900">
+            Total Quantity: <%= totalQuantity %>
+          </h3>
+          <h3 class="mt-2 text-lg font-bold text-gray-900">
+            Total Amount: $<%= totalAmount.toFixed(2) %>
+          </h3>
+        </div>
+
+        <!-- Payment Method -->
+        <div>
+          <h2 class="text-xl font-semibold text-gray-700 mb-2">
+            Payment Method
+          </h2>
+          <select
+            name="paymentMethod"
+            required
+            class="w-full p-3 border border-gray-300 rounded-md"
+          >
+            <option value="Momo">Momo</option>
+            <option value="VNPay">VNPay</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Stripe">Stripe</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-200"
+          >
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const address = {
+      firstName: formData.get("address[firstName]"),
+      lastName: formData.get("address[lastName]"),
+      address: formData.get("address[address]"),
+      city: formData.get("address[city]"),
+      province: formData.get("address[province]"),
+      zipCode: formData.get("address[zipCode]"),
+      phoneNumber: formData.get("address[phoneNumber]"),
+    };
+
+    const paymentMethod = formData.get("paymentMethod");
+    const totalAmount = "<%= totalAmount %>";
+
+    try {
+      const response = await fetch("/place-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address,
+          paymentMethod,
+        }),
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      if (result.url) {
+        window.location.href = result.url; // Stripe Checkout URL
+      } else {
+        alert("Failed to order.");
+      }
+    } catch (error) {
+      console.error("Error creating payment session:", error);
+      alert("An error occurred. Please try again.");
+    }
+  });
+</script>

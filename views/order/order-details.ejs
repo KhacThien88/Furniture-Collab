@@ -1,0 +1,196 @@
+<div class="max-w-4xl mx-auto my-20">
+    <h1 class="text-2xl font-bold border-b pb-4 mb-6">Order Details</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+        <!-- Order Info -->
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold text-gray-800">Order ID: <%= order._id %>
+            </h2>
+            <p class="text-gray-600">Order Date: <%= new Date(order.orderDate).toDateString() %>
+            </p>
+            <p class="text-gray-600">Status:
+                <span class="px-3 py-1 rounded-full text-sm font-medium
+                    <%= order.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
+                       order.status === 'Processing' ? 'bg-orange-100 text-orange-700' :
+                       order.status === 'Shipped' ? 'bg-green-100 text-green-700' :
+                       'bg-blue-100 text-blue-700' %>">
+                    <%= order.status %>
+                </span>
+            </p>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Shipping Address</h3>
+            <p class="text-gray-600">
+                <%= order.address.firstName %>
+                    <%= order.address.lastName %>
+            </p>
+            <p class="text-gray-600">
+                <%= order.address.address %>
+            </p>
+            <p class="text-gray-600">
+                <%= order.address.city %>, <%= order.address.province %>, <%= order.address.zipCode %>
+            </p>
+            <p class="text-gray-600">
+                <%= order.address.country %>
+            </p>
+            <p class="text-gray-600">Phone: <%= order.address.phoneNumber %>
+            </p>
+        </div>
+
+        <!-- Payment Info -->
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Payment Info</h3>
+            <p class="text-gray-600">Method: <span class="font-medium">
+                    <%= order.payment.method %>
+                </span></p>
+            <% if (order.payment.transactionId) { %>
+                <p class="text-gray-600">Transaction ID: <%= order.payment.transactionId %>
+                </p>
+                <% } %>
+        </div>
+
+        <!-- Order Items -->
+        <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Order Items</h3>
+            <div class="space-y-4 flex justify-between items-center">
+                <% order.items.forEach(item=> { %>
+                    <div class="flex items-center gap-4 border-b pb-4">
+                        <img src="<%= item.productId.images[0] %>" alt="<%= item.productId.name %>"
+                            class="w-16 h-16 object-cover rounded-md">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-800">
+                                <%= item.productId.name %>
+                            </h4>
+                            <p class="text-gray-600">Quantity: <%= item.quantity %>
+                            </p>
+                            <p class="text-gray-600">Price: $<%= item.price %>
+                            </p>
+                        </div>
+                    </div>
+                    <% if (order.status==='Delivered' ) { %>
+                        <button class="text-blue-600 hover:text-blue-800 leave-review-btn"
+                            data-product-id="<%= item.productId._id %>">
+                            Leave a Review
+                        </button>
+                        <% } %>
+                            <% }); %>
+            </div>
+        </div>
+
+        <!-- Total Amount -->
+        <div class="mt-6 border-t pt-4">
+            <p class="text-lg font-semibold text-gray-800">Total Amount:
+                <span class="text-blue-600">$<%= order.totalAmount %></span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for leaving a review -->
+<div id="reviewModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h3 class="text-xl font-semibold mb-4">Leave a Review</h3>
+        <form id="reviewForm">
+            <input type="hidden" id="productId" name="productId">
+            <div class="mb-4">
+                <label class="block text-gray-700">Rating</label>
+                <div id="starRating" class="flex gap-1">
+                    <% for (let i=1; i <=5; i++) { %>
+                        <span class="star text-gray-400 cursor-pointer" data-value="<%= i %>">&#9733;</span>
+                        <% } %>
+                </div>
+                <input type="hidden" id="ratingValue" name="rating">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Comment</label>
+                <textarea id="comment" name="comment" rows="4"
+                    class="w-full p-2 border border-gray-300 rounded-md"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Upload Images</label>
+                <input type="file" id="images" name="images" multiple accept="image/*"
+                    class="w-full p-2 border border-gray-300 rounded-md">
+                <p class="text-sm text-gray-500 mt-1">You can upload up to 5 images.</p>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" id="closeModal"
+                    class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const reviewForm = document.getElementById('reviewForm');
+        const reviewModal = document.getElementById('reviewModal');
+        const closeModal = document.getElementById('closeModal');
+        const ratingStars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('ratingValue');
+
+        // Xử lý chọn sao
+        ratingStars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-value');
+                ratingInput.value = rating;
+                ratingStars.forEach(s => s.classList.remove('text-yellow-500'));
+                for (let i = 0; i < rating; i++) {
+                    ratingStars[i].classList.add('text-yellow-500');
+                }
+            });
+        });
+
+        // Mở modal khi nhấn nút Leave a Review
+        document.querySelectorAll('.leave-review-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                document.getElementById('productId').value = btn.dataset.productId;
+                reviewModal.classList.remove('hidden');
+            });
+        });
+
+        // Đóng modal
+        closeModal.addEventListener('click', () => reviewModal.classList.add('hidden'));
+
+        reviewForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const productId = document.getElementById('productId').value;
+            const rating = document.getElementById('ratingValue').value;
+            const comment = document.getElementById('comment').value;
+
+            const reviewData = {
+                productId,
+                rating,
+                comment,
+            };
+
+            try {
+                const response = await fetch(`/review/create/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(reviewData),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Review submitted successfully.');
+                    reviewModal.classList.add('hidden');
+                } else {
+                    alert(result.message || 'Error submitting review.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while submitting your review.');
+            }
+        });
+
+    });
+
+</script>

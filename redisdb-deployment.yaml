@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: redisdb
+  name: redisdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redisdb
+  template:
+    metadata:
+      labels:
+        io.kompose.service: redisdb
+    spec:
+      containers:
+        - image: redis:latest
+          name: redisdb
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+      restartPolicy: Always

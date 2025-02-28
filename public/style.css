@@ -1,0 +1,6 @@
+.selected-thumbnail {
+  border: 3px solid #4caf50;
+  /* Màu viền khi ảnh được chọn */
+  transform: scale(1.1);
+  /* Tăng kích thước ảnh một chút */
+}

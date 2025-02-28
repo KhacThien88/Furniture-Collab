@@ -1,0 +1,157 @@
+<div class="w-full h-full flex flex-col items-center py-8 bg-white">
+    <div class="w-11/12 flex flex-col <%= user.googleId ? 'items-center' : 'md:flex-row justify-between' %> gap-8">
+        <!-- Left: Edit Profile -->
+        <div
+            class="<%= user.googleId ? 'w-full md:w-1/2' : 'w-full md:w-1/2' %> p-6 bg-white shadow-lg rounded-lg mb-6 md:mb-0">
+            <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Edit Profile</h1>
+            <form method="POST" action="/profile/edit" enctype="multipart/form-data" class="space-y-4">
+                <!-- Display general message for Edit Profile -->
+                <% if (typeof editProfile_message !=='undefined' && editProfile_message) { %>
+                    <div
+                        class="<%= typeof success !== 'undefined' && success ? 'bg-green-500' : 'bg-red-500' %> text-white p-4 rounded-md mb-4">
+                        <%= editProfile_message %>
+                    </div>
+                    <% } %>
+
+                        <!-- Username -->
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                            <input type="text" id="username" name="username" value="<%= user.username || '' %>"
+                                class="w-full border px-4 py-2 rounded-md" />
+                        </div>
+
+                        <!-- First and Last Name -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input type="text" id="firstName" name="firstName" value="<%= user.firstName || '' %>"
+                                    class="w-full border px-4 py-2 rounded-md" />
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" value="<%= user.lastName || '' %>"
+                                    class="w-full border px-4 py-2 rounded-md" />
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" value="<%= user.email || '' %>" readonly
+                                class="w-full border px-4 py-2 rounded-md bg-gray-200 cursor-not-allowed" />
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div>
+                            <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" value="<%= user.phoneNumber || '' %>"
+                                class="w-full border px-4 py-2 rounded-md" />
+                        </div>
+
+                        <!-- Address -->
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                            <input type="text" id="address" name="address" value="<%= user.address || '' %>"
+                                class="w-full border px-4 py-2 rounded-md" />
+                        </div>
+
+                        <!-- City and Province -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                                <input type="text" id="city" name="city" value="<%= user.city || '' %>"
+                                    class="w-full border px-4 py-2 rounded-md" />
+                            </div>
+                            <div>
+                                <label for="province" class="block text-sm font-medium text-gray-700">Province</label>
+                                <input type="text" id="province" name="province" value="<%= user.province || '' %>"
+                                    class="w-full border px-4 py-2 rounded-md" />
+                            </div>
+                        </div>
+
+                        <!-- Avatar -->
+                        <div>
+                            <label for="avatar" class="block text-sm font-medium text-gray-700">Avatar</label>
+                            <div class="flex items-center gap-4">
+                                <img id="avatarPreview" src="<%= user.avatarUrl || '/default-avatar.png' %>"
+                                    alt="Avatar Preview" class="w-16 h-16 rounded-full object-cover border">
+                                <input type="file" id="avatar" name="avatar" accept="image/*"
+                                    class="w-full border px-4 py-2 rounded-md" onchange="previewImage(event)" />
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-lime-500 text-white py-2 px-4 rounded-md hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 mt-4">
+                            Save Changes
+                        </button>
+            </form>
+        </div>
+
+        <!-- Right: Change Password -->
+        <% if (!user.googleId) { %>
+            <div class="w-full md:w-1/2 p-6 bg-white shadow-lg rounded-lg ">
+                <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Change Password</h1>
+                <form method="POST" action="/profile/change-password" class="space-y-4">
+                    <!-- Display general message for Change Password -->
+                    <% if (typeof changePassword_message !=='undefined' && changePassword_message) { %>
+                        <div
+                            class="<%= typeof success !== 'undefined' && success ? 'bg-green-500' : 'bg-red-500' %> text-white p-4 rounded-md mb-4">
+                            <%= changePassword_message %>
+                        </div>
+                        <% } %>
+
+                            <% ['currentPassword', 'newPassword' , 'confirmNewPassword' ].forEach((field)=> { %>
+                                <div class="relative">
+                                    <label for="<%= field %>" class="block text-sm font-medium text-gray-700">
+                                        <%= field==='currentPassword' ? 'Current Password' : field==='newPassword'
+                                            ? 'New Password' : 'Confirm New Password' %>
+                                    </label>
+                                    <input type="password" id="<%= field %>" name="<%= field %>"
+                                        class="w-full border px-4 py-2 rounded-md pr-10" />
+                                    <i id="<%= field %>Toggle"
+                                        class="fa fa-eye-slash absolute right-3 top-9 text-gray-500 cursor-pointer"
+                                        aria-hidden="true" onclick="togglePasswordVisibility('<%= field %>')"></i>
+                                </div>
+                                <% }); %>
+
+                                    <button type="submit"
+                                        class="w-full bg-lime-500 text-white py-2 px-4 rounded-md hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 mt-4">
+                                        Change Password
+                                    </button>
+                </form>
+            </div>
+            <% } %>
+    </div>
+</div>
+
+<script>
+    // Hàm xử lý hiển thị ảnh khi chọn file mới
+    function previewImage(event) {
+            const fileInput = event.target;
+            const preview = document.getElementById('avatarPreview');
+
+            // Kiểm tra nếu có file được chọn
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // Cập nhật ảnh hiển thị
+                };
+                reader.readAsDataURL(fileInput.files[0]); // Đọc dữ liệu file
+            }
+        }
+
+        function togglePasswordVisibility(fieldId) {
+                const input = document.getElementById(fieldId);
+                const toggleIcon = document.getElementById(`${fieldId}Toggle`);
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    toggleIcon.classList.remove("fa-eye-slash");
+                    toggleIcon.classList.add("fa-eye");
+                } else {
+                    input.type = "password";
+                    toggleIcon.classList.remove("fa-eye");
+                    toggleIcon.classList.add("fa-eye-slash");
+                }
+            }
+</script>

@@ -1,0 +1,21 @@
+<div class="bg-white p-6 rounded-lg shadow-md max-w-md w-full text-center">
+    <% if (typeof message !=='undefined' && message) { %>
+        <h1 class="text-2xl font-bold text-green-600">Thành công!</h1>
+        <p class="text-gray-700 mt-4">
+            <%= message %>
+        </p>
+        <a href="/login"
+            class="mt-6 inline-block bg-blue-500 text-white font-medium py-2 px-4 rounded hover:bg-blue-600">
+            Đăng nhập
+        </a>
+        <% } else if (typeof error !=='undefined'  && error) { %>
+            <h1 class="text-2xl font-bold text-red-600">Lỗi!</h1>
+            <p class="text-gray-700 mt-4">
+                <%= error %>
+            </p>
+            <a href="/signup"
+                class="mt-6 inline-block bg-blue-500 text-white font-medium py-2 px-4 rounded hover:bg-blue-600">
+                Đăng ký lại
+            </a>
+            <% } %>
+</div>

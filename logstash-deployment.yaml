@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: logstash
+  name: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: logstash
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: logstash
+    spec:
+      containers:
+        - image: docker.elastic.co/logstash/logstash:8.10.0
+          name: logstash
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+            - containerPort: 5044
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /usr/share/logstash/pipeline/logstash.conf
+              name: logstash-cm0
+              subPath: logstash.conf
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1"
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: logstash.conf
+                path: logstash.conf
+            name: logstash-cm0
+          name: logstash-cm0
