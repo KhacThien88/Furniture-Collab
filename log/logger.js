@@ -8,7 +8,7 @@ const logger = createLogger({
     new LogstashTransport({
       // host: "localhost", //dev-env
       // host: "logstash", //docker-env
-      host: "54.255.49.4", //dev-env
+      host: "52.221.227.81", //dev-env
       port: 5000,
       applicationName: "furnitureapp",
       debug: true,

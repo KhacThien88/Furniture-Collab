@@ -9,7 +9,7 @@ const path = require("path");
 const fs = require("fs");
 // const redis = new Redis(); //localenv
 // const redis = new Redis({ host: "redisdb" }); // docker env
-const redis = new Redis("redis://54.255.49.4:6379");
+const redis = new Redis("redis://52.221.227.81:6379");
 
 const apiShoppingCartController = require("../../api/shoppingCart/apiShoppingCartController");
 

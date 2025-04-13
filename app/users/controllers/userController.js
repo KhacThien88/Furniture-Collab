@@ -7,7 +7,7 @@ const apiShoppingCartController = require("../../api/shoppingCart/apiShoppingCar
 const Redis = require("ioredis");
 // const redis = new Redis(); //localenv
 // const redis = new Redis({ host: "redisdb" });
-const redis = new Redis("redis://54.255.49.4:6379");
+const redis = new Redis("redis://52.221.227.81:6379");
 // Hàm kiểm tra độ phức tạp mật khẩu
 
 const isValidPassword = (password) => {

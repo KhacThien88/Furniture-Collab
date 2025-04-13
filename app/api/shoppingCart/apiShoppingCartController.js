@@ -3,7 +3,7 @@ const productService = require("../../products/services/productService");
 const Redis = require("ioredis");
 // const redis = new Redis(); //localenv
 // const redis = new Redis({ host: "redisdb" }); //docker-env
-const redis = new Redis("redis://54.255.49.4:6379");
+const redis = new Redis("redis://52.221.227.81:6379");
 
 //Add a new item to the cart
 async function addCartItem(req, res) {
