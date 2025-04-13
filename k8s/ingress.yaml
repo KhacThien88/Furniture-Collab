@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: furniture-ingress
+  namespace: furniture
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: b683-116-111-13-141.ngrok-free.app
+      http:
+        paths:
+          - backend:
+              service:
+                name: furniture-app-svc
+                port:
+                  number: 81
+            path: /
+            pathType: Prefix

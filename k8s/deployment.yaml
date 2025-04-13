@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: furniture-app-deployment
+  namespace: furniture
+  labels:
+    app: furniture-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: furniture-app
+  template:
+    metadata:
+      labels:
+        app: furniture-app
+    spec:
+      containers:
+      - name: furniture-app
+        image: ktei8htop15122004/furniture-app:v1.3
+        ports:
+        - containerPort: 5002
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "250m"
+          limits:
+            memory: "500Mi"
+            cpu: "500m"

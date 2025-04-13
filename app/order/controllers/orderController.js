@@ -75,6 +75,8 @@ exports.handleStripeSuccess = async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(
       req.query.session_id
     );
+    console.log("sessionnnn: " , session);
+    console.log("resssss: " ,res);
 
     // Lấy metadata từ phiên Stripe
     const address = JSON.parse(session.metadata.address);
@@ -86,7 +88,7 @@ exports.handleStripeSuccess = async (req, res) => {
       address,
       session.id // Stripe session ID
     );
-
+    
     // Chuyển hướng người dùng đến trang thành công
     res.redirect(`/order-success/${newOrder._id}`);
   } catch (error) {

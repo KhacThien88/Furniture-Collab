@@ -1,9 +1,10 @@
 const cartService = require("../services/cartService");
 const productService = require("../../products/services/productService");
 const Redis = require("ioredis");
-const redis = new Redis();
+// const redis = new Redis();
 // const redis = new Redis({ host: "redisdb" }); //docker-env
-// const redis = new Redis({ host: "54.255.49.4:6379" });
+const redis = new Redis("redis://54.255.49.4:6379");
+
 exports.getAllCart = async (req, res) => {
   const userId = req.user?._id; // Kiểm tra người dùng đã đăng nhập
   const sessionId = req.sessionID;

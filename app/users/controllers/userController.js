@@ -5,10 +5,11 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const apiShoppingCartController = require("../../api/shoppingCart/apiShoppingCartController");
 const Redis = require("ioredis");
-const redis = new Redis(); //localenv
+// const redis = new Redis(); //localenv
 // const redis = new Redis({ host: "redisdb" });
-// const redis = new Redis({ host: "54.255.49.4:6379" });
+const redis = new Redis("redis://54.255.49.4:6379");
 // Hàm kiểm tra độ phức tạp mật khẩu
+
 const isValidPassword = (password) => {
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
